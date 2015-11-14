@@ -1,0 +1,26 @@
+﻿1\call 和 apply的主要用途是改变上下文，区别是传递参数的方式不同，call是以单独的形式传入，apply是以数组的形式传递；
+
+2、function listToArray(arguments){
+	if(Array.prototype.slice){
+		return Array.prototype.slice.call(arguments,0)
+	}else{
+		var newArr = [];
+		for(var i=0, i<arguments.length; i++){
+			newArr.push(arguments[i])
+		}
+		return newArr;
+	}
+}
+
+3\
+
+var aJSON = '[{"name": "张三", "age": 25},{"name": "李四", "age": 20},{"name": "王五", "age": 15},{"name": "赵六", "age": 35}]';
+
+var dataJSON = JSON.parse(aJSON);
+
+
+var newArr = dataJSON.sort(function(a,b){
+	return a.age - b.age;
+})
+
+conosole.log(newArr)

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>表格排序</title>
+</head>
+<body>
+<div>
+    <span>排序</span>
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+</div>
+<script type="text/javascript">
+    window.onload = function() {
+
+        //obj按固定属性值进行排序
+
+        var tempObj = [{name: 'luo', age: '18'}, {name: 'luo', age: '8'}, {name: 'luo', age: '38'}, {
+            name: 'luo',
+            age: '68'
+        }, {name: 'luo', age: '58'}]
+        var arr = tempObj.sort(function(a, b) {
+            return a.age - b.age;
+        })
+        console.log(arr);
+        var oSortBtn = document.getElementsByTagName('span')[0];
+        var oLis = document.getElementsByTagName('li');
+       //给li绑定事件
+        for(var i=0; i<oLis.length; i++){
+            oLis[i].index = i;
+            oLis[i].onclick= function(){
+                alert(oLis[this.index].innerText)
+            }
+        }
+        var newArr = [];
+        for (var i = 0; i < oLis.length; i++) {
+            newArr.push(oLis[i]);
+        }
+        var fragment = document.createDocumentFragment();
+        var newOLis = newArr.sort(function(a, b) {
+            return b.innerText - a.innerText;
+        })
+        var upSort = false;
+        oSortBtn.onclick = function() {
+            if(!upSort) {
+                upSort = true;
+            }else{
+                newOLis.reverse();
+            }
+            for (var i = 0; i < newOLis.length; i++) {
+                fragment.appendChild(newOLis[i]);
+            }
+            document.getElementById('list').appendChild(fragment)
+        }
+
+    }
+</script>
+</body>
+</html>
