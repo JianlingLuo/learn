@@ -30,27 +30,34 @@
         }
 
         img {
-            width: 300px;
+            width: 260px;height:200px;
         }
     </style>
     <script type="text/javascript">
         window.onload = function() {
-            //单张延时加载原理
-            var oImg = document.getElementsByTagName('img')[0];
-            var oImgBottom = utils.getOffset(oImg).t + oImg.clientHeight;
+            var oImgs = document.getElementsByTagName('img');
+            for (var i = 0; i < oImgs.length; i++) {
+                oImgs[i].bottomPosition = utils.getOffset(oImgs[i]).t + oImgs[i].clientHeight;
+            }
             window.onscroll = function() {
-                var windowBottom = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
-                if(!oImg.loadStatus && oImgBottom < windowBottom) {
-                    oImg.src = '../img/o_loading.gif';
+                for (var i = 0; i < oImgs.length; i++) {
+                    var oImg = oImgs[i];
+                    loadImg(oImg, oImg.getAttribute('data-url'))
+                }
+            }
+
+            function loadImg(oImg, url) {
+                var browerScrollPosition = (document.documentElement.scrollTop || document.body.scrollTop) + (document.documentElement.clientHeight || document.body.clientHeight);
+                if(!oImg.loadStatus && oImg.bottomPosition < browerScrollPosition) {
+                    oImg.style.backgroundImage = '../img/o_loading.gif';
                     var tempImg = new Image;
-                    tempImg.src = '../img/388.jpg';
+                    tempImg.src = url;
                     tempImg.onload = function() {
                         oImg.src = this.src;
                         oImg.loadStatus = true;
                     }
                 }
             }
-
         }
     </script>
 </head>
@@ -84,8 +91,9 @@
         <div class="container">
 
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <img data-url='../img/388.jpg' src="../img/default.jpg"><img data-url='../img/389.jpg'
+                                                                         src="../img/default.jpg">
+            <img data-url='../img/399.jpg' src="../img/default.jpg">
             <img data-url='../img/400.jpg' src="../img/default.jpg">
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
